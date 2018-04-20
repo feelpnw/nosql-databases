@@ -15,4 +15,13 @@ a = collection.find({"item": "product1"}).count()
 print(a)
 cursor = collection.find()
 # print(sale["item"])
+<<<<<<< HEAD
 print(cursor)
+=======
+print(cursor)
+
+
+
+
+
+>>>>>>> homework-3
