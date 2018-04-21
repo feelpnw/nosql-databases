@@ -22,6 +22,7 @@ end
 redis = Redis.new
 # user:3 up votes article:1
 article_vote(redis, "user:3", "article:1")
+print(article_vote(redis, "user:3", "article:1"))
 # user:3 up votes article:3
 article_vote(redis, "user:3", "article:3")
 # user:2 switches their vote from article:8 to article:1

@@ -5,14 +5,18 @@ ARTICLES_FILE = "data/articles.json"
 SCORES_FILE = "data/scores.json"
 VOTES_FILE = "data/votes.json"
 
+
 def setup_data(redis)
+  # delete data from all database
   redis.flushall
 
-  articles_file = File.new(ARTICLES_FILE)
+  articles_file = File.new(ARTICLES_FILE) 
   articles = JSON.load(articles_file.read)
+
   articles.each_with_index do |article, id|
     article.each do |k, v|
       redis.hset("article:#{id}", k, v)
+      # print "article:#{id}", k, v
     end
   end
   puts "#{articles.size} articles loaded into the database as hashes."
