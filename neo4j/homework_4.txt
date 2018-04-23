@@ -1,5 +1,5 @@
 // The scenario you have used for your schema is:
-
+// Book : Pride and Prejudice 
 
 // This is an example. Your own commands should *not* be commented out so we can pipe the file into the cypher-shell.
 // If you'd like to test your commands, you can run 'cat homework_4.txt | cypher-shell -u neo4j -p test' from
@@ -7,5 +7,57 @@
 // CREATE (a:person { name: 't' });
 
 
-// .....
-// :
+CREATE (lydia:Woman { name: 'Lydia Bennet', age: 16 })
+CREATE (elizabeth:Woman { name: 'Elizabeth Bennet', age: 20 })
+CREATE (charlotte:Woman { name: 'Charlotte Lucas', age: 27 })
+CREATE (george:Man { name: 'Georgy Wickham', age: 25 })
+CREATE (fitzwilliam:Man:Rich { name: 'Fitzwilliam Darcy', age: 28 })
+CREATE (charles:Man:Rich { name: 'Charles Bingley', age: 22 })
+CREATE (jane:Woman { name: 'Jane Bennet', age: 23 })
+CREATE (caroline:Woman:Rich { name: 'Caroline Bingley', age: 19 })
+CREATE (william:Man { name: 'William Collins', age: 25 })
+CREATE (georgiana:Woman { name: 'Georgiana Darcy', age: 16 })
+CREATE (catherine:Woman:Rich { name: 'Lady Catherine', age: 64 })
+
+CREATE (lydia)-[:MARRIES {type: 'puppy love'}]->(georgy)
+CREATE (george)-[:MARRIES {type: 'cupboard love'}]->(georgy)
+CREATE (george)-[:FLIRTS]->(georgiana)
+CREATE (georgiana)-[:LIKES]->(georgy)
+CREATE (georgiana)-[:SISTER_OF]->(fitzwilliam)
+CREATE (lydia)-[:SISTER_OF]->(elizabeth)
+CREATE (lydia)-[:SISTER_OF]->(jane)
+CREATE (fitzwilliam)-[:BROTHER_OF]->(georgiana)
+CREATE (fitzwilliam)-[:DISLIKES]->(george)
+CREATE (fitzwilliam)-[:LOVES {type: 'true love'}]->(elizabeth)
+CREATE (fitzwilliam)-[:FRIEND_OF]->(charles)
+CREATE (charles)-[:FRIEND_OF]->(fitzwilliam)
+CREATE (elizabeth)-[:ATTRACTED_TO {type: 'prejudice'}]->(georgy)
+CREATE (elizabeth)-[:LOVES {type: 'true love'}]->(fitzwilliam)
+CREATE (elizabeth)-[:SISTER_OF]->(jane)
+CREATE (elizabeth)-[:FRIEND_OF]->(charlotte)
+CREATE (charlotte)-[:FRIEND_OF]->(elizabeth)
+CREATE (charlotte)-[:MARRIES {type: 'cupboard love'}]->(william)
+CREATE (william)-[:MARRIES]->(charlotte)
+CREATE (william)-[:BENEFICIARY_OF]->(catherine)
+CREATE (william)-[:PROPOSES]->(catherine)
+CREATE (catherine)-[:BENEFACTOR_OF]->(william)
+CREATE (jane)-[:LOVES {type: 'cupboard love'}]->(charles)
+CREATE (jane)-[:COMPANION_OF]->(caroline)
+CREATE (jane)-[:SISTER_OF]->(lydia)
+CREATE (jane)-[:SISTER_OF]->(elizabeth)
+CREATE (caroline)-[:COMPANION_OF]->(jane)
+CREATE (caroline)-[:SISTER_OF]->(charles)
+CREATE (caroline)-[:ATTRACTED_TO]->(fitzwilliam)
+CREATE (charles)-[:LOVES]->(jane)
+CREATE (charles)-[:BROTHER_OF]->(caroline)
+
+MATCH (w:Woman)-[r:LOVES]->(m:Man)
+WHERE w.age <= 25
+RETURN w.name, m.name, r 
+
+MATCH (p1:Woman)-[r1:MARRIES]->(p2:Man),
+	(p3:Woman)-[r2:LOVES]->(p4:Man)
+RETURN p1.name, r1, p3.name, r2
+
+
+
