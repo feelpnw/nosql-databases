@@ -6,7 +6,7 @@
 // the vagrant box command line. Make sure neo4j is running first.
 // CREATE (a:person { name: 't' });
 
-
+// create nodes
 CREATE (lydia:Woman { name: 'Lydia Bennet', age: 16 })
 CREATE (elizabeth:Woman { name: 'Elizabeth Bennet', age: 20 })
 CREATE (charlotte:Woman { name: 'Charlotte Lucas', age: 27 })
@@ -19,8 +19,9 @@ CREATE (william:Man { name: 'William Collins', age: 25 })
 CREATE (georgiana:Woman { name: 'Georgiana Darcy', age: 16 })
 CREATE (catherine:Woman:Rich { name: 'Lady Catherine', age: 64 })
 
+// create relationships 
 CREATE (lydia)-[:MARRIES {type: 'puppy love'}]->(georgy)
-CREATE (george)-[:MARRIES {type: 'cupboard love'}]->(georgy)
+CREATE (george)-[:MARRIES {type: 'cupboard love'}]->(lydia)
 CREATE (george)-[:FLIRTS]->(georgiana)
 CREATE (georgiana)-[:LIKES]->(georgy)
 CREATE (georgiana)-[:SISTER_OF]->(fitzwilliam)
@@ -51,13 +52,12 @@ CREATE (caroline)-[:ATTRACTED_TO]->(fitzwilliam)
 CREATE (charles)-[:LOVES]->(jane)
 CREATE (charles)-[:BROTHER_OF]->(caroline)
 
+// two queries 
+
 MATCH (w:Woman)-[r:LOVES]->(m:Man)
 WHERE w.age <= 25
-RETURN w.name, m.name, r 
+RETURN w.name, w.age, m.name, m.age, type(r)
 
-MATCH (p1:Woman)-[r1:MARRIES]->(p2:Man),
-	(p3:Woman)-[r2:LOVES]->(p4:Man)
-RETURN p1.name, r1, p3.name, r2
-
-
+MATCH (p1)-[r1 {type: 'cupboard love'}]->(p3)
+RETURN p1.name, p3.name, type(r1)
 
