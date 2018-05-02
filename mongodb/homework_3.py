@@ -1,7 +1,7 @@
 # import the data file : in terminal, in the folder, type the follow: 
 # mongorestore -d hw3 -c movies movies.bson
 # which means that the database used for all except E is hw3
-# 
+
 import pymongo
 from pymongo import MongoClient
 
@@ -155,7 +155,3 @@ result = database.movies2.aggregate(pipeline)
 # print the documents of the result 
 for document in result: 
 	print(document)
-
-
-
->>>>>>> homework-3
